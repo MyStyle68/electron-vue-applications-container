@@ -1,1 +1,19 @@
-# 基于Vue-Cli3搭建的electron-vue的应用统一入口
+# electron-vue-applications-container
+
+## Project setup
+```
+yarn install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn serve
+```
+
+### Compiles and minifies for production
+```
+yarn build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
