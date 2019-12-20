@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, protocol, BrowserWindow } from 'electron'
+console.log("------------------------");
 import {
   createProtocol,
   installVueDevtools
@@ -31,6 +32,7 @@ function createWindow () {
   }
 
   win.on('closed', () => {
+    console.log('chuangkou close ======================================================')
     win = null
   })
 }
