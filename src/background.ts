@@ -4,6 +4,8 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 
+import {loadTray} from "./electron/trays/CustomTray";
+
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 let win: BrowserWindow | null;
@@ -46,7 +48,8 @@ app.on('activate', () => {
 });
 
 app.on('ready', async () => {
-  createWindow()
+  createWindow();
+  loadTray();
 });
 
 if (isDevelopment) {
