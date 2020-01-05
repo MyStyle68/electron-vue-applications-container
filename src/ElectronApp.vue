@@ -4,7 +4,21 @@
       <div slot="mainContent" id="app" :style="{backgroundColor: backGroundInfo.bgColor}">
         <div class="bgc" :style="backgroundImage"></div>
         <TopMessage/>
-        <p>sdfsdfsdg拉开距离</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
+        <p>sdfsdfsdg拉开距离Electron</p>
         <p>sdfsdfsdg拉开距离</p>
         <p>sdfsdfsdg拉开距离</p>
         <p>sdfsdfsdg拉开距离</p>
@@ -72,7 +86,7 @@
   @Component({
     components: {TopMessage, WindowLayout}
   })
-  export default class App extends Vue {
+  export default class ElectronApp extends Vue {
 
     private backGroundInfo: BackGround = {
       bgColor: "skyblue",
