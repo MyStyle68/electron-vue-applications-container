@@ -15,15 +15,17 @@ protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: {secure: true,
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 800, height: 600, transparent: true, frame: false, webPreferences: {
+    width: 800, height: 600, show: false, transparent: true, alwaysOnTop: true, frame: false, webPreferences: {
       nodeIntegration: true
     }
   });
 
+  // win.setSkipTaskbar(true);
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
+    // if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development

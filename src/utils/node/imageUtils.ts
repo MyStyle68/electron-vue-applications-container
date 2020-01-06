@@ -7,6 +7,7 @@ export const img2Base64: (path: string) => string | undefined = (path: string) =
     if (!fileStat.isFile()) {
       return undefined;
     }
+
     const fileType = mimeType.lookup(path);
     if (!fileType.toString().includes("image")) {
       return undefined;
