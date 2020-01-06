@@ -7,6 +7,8 @@ export interface IconImage {
 }
 
 export interface TrayIcon {
+  logoutIcon: IconImage
+  chatIcon: IconImage
   onlineIcon16: IconImage
   onlineIcon24: IconImage
   onlineIcon32: IconImage

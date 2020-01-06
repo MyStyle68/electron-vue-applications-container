@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import TrayView from "./views/electron/tray/TrayView.vue"
+import Chat from "@/views/electron/chat/Chat.vue";
 import ElectronApp from './ElectronApp.vue'
 import router from './router'
 import store from './store'
@@ -11,7 +12,7 @@ import GlobalMessage from "./plugin/message/globalMessage"
 import {MessageObserves} from "@/plugin/message/types";
 
 import WindowLayoutPlugin from "./plugin/layout/windowLayoutPlugin";
-import {TRAY_VIEW} from "@/const/viewsName";
+import {CHAT_VIEW, TRAY_VIEW} from "@/const/viewsName";
 import Remote = Electron.Remote;
 import IpcRenderer = Electron.IpcRenderer;
 
@@ -42,10 +43,11 @@ if (typeof WebSocket === "undefined") {
   const isHaveElectron = typeof (window as any).require !== "undefined";
 
   const url = location.href;
-  console.log(url)
   let app: any = App;
   if (url.includes(TRAY_VIEW)) {
     app = TrayView
+  } else if (url.includes(CHAT_VIEW)) {
+    app = Chat;
   }
 
 // if (isHaveElectron) {

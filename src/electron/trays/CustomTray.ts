@@ -1,9 +1,8 @@
 import {app, Menu, Tray, nativeImage, dialog, BrowserWindow} from "electron";
 import {TrayIcon} from "@/electron/trays/types";
 import {img2Base64} from "@/utils/node/imageUtils";
-import {createProtocol} from "vue-cli-plugin-electron-builder/lib";
 import {TRAY_VIEW} from "@/const/viewsName";
-import NativeImage = Electron.NativeImage;
+import chat from "@/electron/chat/Chat";
 
 const path = require("path");
 const os = require("os");
@@ -13,7 +12,8 @@ let tray = null;
 
 const getTrayIcon: () => TrayIcon = () => {
 
-
+  const chatBase64: string = img2Base64("icons/tray/chat.png") as string;
+  const logoutBase64: string = img2Base64("icons/tray/退出 (1).png") as string;
   const onlineIcon16Base64: string = img2Base64("icons/tray/Cloud_Apps_16px_1098659_easyicon.net.png") as string;
   const onlineIcon24Base64: string = img2Base64("icons/tray/Cloud_Apps_24px_1098659_easyicon.net.png") as string;
   const onlineIcon32Base64: string = img2Base64("icons/tray/Cloud_Apps_32px_1098659_easyicon.net.png") as string;
@@ -31,6 +31,14 @@ const getTrayIcon: () => TrayIcon = () => {
   const offlineIcon96Base64: string = img2Base64("icons/tray/Cloud_Apps_Silver_96px_1098660_easyicon.net.png") as string;
   const offlineIcon128Base64: string = img2Base64("icons/tray/Cloud_Apps_Silver_128px_1098660_easyicon.net.png") as string;
   return {
+    chatIcon: {
+      img: nativeImage.createFromDataURL(chatBase64),
+      base64Str: chatBase64
+    },
+    logoutIcon: {
+      img: nativeImage.createFromDataURL(logoutBase64),
+      base64Str: logoutBase64
+    },
     onlineIcon16: {
       img: nativeImage.createFromDataURL(onlineIcon16Base64),
       base64Str: onlineIcon16Base64
@@ -104,10 +112,10 @@ export const loadTray = () => {
 
   const platform = os.platform();
   const trayIcons = getTrayIcon();
+  const chainWin = chat();
   if (platform == "linux") {
-    console.log("================")
     win = new BrowserWindow({
-      width: 64, height: 64, resizable: false, show: false, alwaysOnTop: true, frame: false, webPreferences: {
+      width: 64, height: 64, resizable: false, show: false, alwaysOnTop: false, frame: false, webPreferences: {
         nodeIntegration: true
       }
     });
@@ -116,9 +124,8 @@ export const loadTray = () => {
     if (process.env.WEBPACK_DEV_SERVER_URL) {
       // Load the url of the dev server if in development mode
       win.loadURL(`${process.env.WEBPACK_DEV_SERVER_URL}${TRAY_VIEW}`);
-      if (!process.env.IS_TEST) win.webContents.openDevTools()
+      // if (!process.env.IS_TEST) win.webContents.openDevTools()
     } else {
-      createProtocol('app');
       // Load the index.html when not in development
       win.loadURL(`app://./index.html${TRAY_VIEW}`)
     }
@@ -129,29 +136,41 @@ export const loadTray = () => {
     })
 
   } else {
-    // tray = new Tray(trayIcons.onlineIcon16);
-    // const contextMenu = Menu.buildFromTemplate([
-    //   {
-    //     label: "退出",
-    //     click: () => {
-    //       const resultNum = dialog.showMessageBoxSync({
-    //         type: "info",
-    //         title: "退出提醒",
-    //         cancelId: 1,
-    //         defaultId: 1,
-    //         // icon: trayIcons.onlineIcon128,
-    //         message: "是否退出本程序",
-    //         buttons: ["确认", "取消"]
-    //       });
-    //       if (resultNum === 0) {
-    //         app.quit();
-    //       }
-    //     }
-    //   }
-    // ]);
-    // // tray.setTitle("收到的非官方的");
-    // tray.setToolTip("测试啊啊啊啊 ");
-    // tray.setContextMenu(contextMenu);
+    tray = new Tray(trayIcons.onlineIcon24.img);
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: "即时通",
+        icon: trayIcons.chatIcon.img,
+        click: () => {
+          chainWin.show();
+        }
+      },
+      {
+        type: "separator"
+      },
+      {
+        label: "退出",
+        icon: trayIcons.logoutIcon.img,
+        click: () => {
+          const resultNum = dialog.showMessageBoxSync({
+            type: "info",
+            title: "退出提醒",
+            cancelId: 1,
+            defaultId: 1,
+            icon: trayIcons.onlineIcon128.img,
+            message: "是否退出本程序",
+            buttons: ["确认", "取消"]
+          });
+          if (resultNum === 0) {
+            app.quit();
+          }
+        }
+      }
+    ]);
+    // tray.setTitle("收到的非官方的");
+    tray.setToolTip("测试啊啊啊啊 ");
+    tray.setContextMenu(contextMenu);
+
   }
 
 };

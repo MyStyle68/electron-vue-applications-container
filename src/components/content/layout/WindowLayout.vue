@@ -6,12 +6,16 @@
       <div class="right-no-drag" style="-webkit-app-region: no-drag"></div>
       <div class="btn-group">
         <div style="-webkit-app-region: no-drag" title="关闭" @click="closeWindow" class="close icon icon-close"></div>
-        <div style="-webkit-app-region: no-drag" title="最小化" class="zuixiao icon icon-zuixiaohua"></div>
-        <div style="-webkit-app-region: no-drag" title="最大化" class="da-or-xiao icon icon-fangda"></div>
+        <div style="-webkit-app-region: no-drag" title="最小化" @click="minWindow"
+             class="zuixiao icon icon-zuixiaohua"></div>
+        <div style="-webkit-app-region: no-drag" :title="maxBtnTitle" @click="maxWindow"
+             :class="`da-or-xiao icon icon-${maxBtnClassName}`"></div>
       </div>
     </div>
     <div :style="mainHeightStyle" class="main-content">
-      <slot name="mainContent"/>
+      <VueScroll :ops="scrollOps">
+        <slot name="mainContent"/>
+      </VueScroll>
     </div>
   </div>
 </template>
@@ -27,12 +31,21 @@
   })
   export default class WindowLayout extends Vue {
 
+    private scrollOps = {
+      bar:{
+        background: '#cecece'
+      }
+    };
 
     @Prop({type: Function, required: false})
     private closeEven: (() => void) | undefined;
 
     @Prop({type: Boolean, default: false})
     private noHaveDrag!: boolean;
+
+    private maxBtnClassName: 'suoxiao' | 'fangda' = "fangda";
+
+    private maxBtnTitle: '最大化' | '还原' = "最大化";
 
     private get mainHeightStyle(): any {
       let height = 25;
@@ -42,16 +55,31 @@
       return {height: `calc(100% - ${height}px)`}
     }
 
+    private minWindow() {
+      this.electronRemote.getCurrentWindow().minimize();
+    }
+
+    private maxWindow() {
+      if (this.maxBtnClassName === "fangda") {
+        this.maxBtnClassName = "suoxiao";
+        this.maxBtnTitle = "还原";
+        this.electronRemote.getCurrentWindow().maximize();
+      } else {
+        this.maxBtnClassName = "fangda";
+        this.maxBtnTitle = "最大化";
+        this.electronRemote.getCurrentWindow().unmaximize();
+      }
+    }
+
     private closeWindow() {
-      alert("进入关闭window函数");
       if ("function" == typeof this.closeEven) {
         this.closeEven();
         return
       }
-      alert("默认实现")
+      this.electronRemote.getCurrentWindow().close();
     }
 
-    private created(){
+    private created() {
       console.log("electron is ==> ", this.isHaveElectron);
     }
 
@@ -67,6 +95,7 @@
     right: 0;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 
     .top-drag, .main-content {
       position: relative;
@@ -80,6 +109,7 @@
     .top-drag {
       height: 26px;
       background-color: #2F343F;
+      overflow: hidden;
 
       .btn-group {
         width: 80px;
