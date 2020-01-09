@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1183",
+      "name": "系统推送",
+      "font_class": "xitongtuisong",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "372212",
       "name": "cc-message",
       "font_class": "cc-message",
@@ -18,6 +25,48 @@
       "font_class": "fl-renyuan",
       "unicode": "e625",
       "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "2668432",
+      "name": "箭头",
+      "font_class": "jiantou",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "2945806",
+      "name": "消息推送配置",
+      "font_class": "xiaoxituisongpeizhi",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "3851377",
+      "name": "推送",
+      "font_class": "tuisong",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "4464527",
+      "name": "消息",
+      "font_class": "xiaoxi",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "5809085",
+      "name": "预设人员",
+      "font_class": "yusherenyuan",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "8059384",
+      "name": "web端模版操作_人员信息",
+      "font_class": "webduanmobancaozuo_renyuanxinxi",
+      "unicode": "edf7",
+      "unicode_decimal": 60919
     },
     {
       "icon_id": "8949026",
